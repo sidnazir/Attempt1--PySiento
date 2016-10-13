@@ -1,6 +1,20 @@
 #:import utils kivy.utils
 
 <Widgets>
+	Button:
+		text: "start"
+		id: b11
+		size: 100, 50
+		pos: 200,500
+		on_press: root.start_reading()
+
+	Button:
+		text: "stop"
+		id: b12
+		size: 100, 50
+		pos: 400,500
+		on_press: root.stop_reading()
+
 	Graph:
 		id: g1
 		size: 300, 300
@@ -43,3 +57,17 @@
 		xmax:100
 		ymin:-1
 		ymax:1
+
+	Button:
+		text: "start"
+		id: b21
+		size: 100, 50
+		pos: 200,0
+		on_press: root.start_sending()
+
+	Button:
+		text: "stop"
+		id: b22
+		size: 100, 50
+		pos: 400,0
+		on_press: root.stop_sending()
