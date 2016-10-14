@@ -1,6 +1,7 @@
 #:import utils kivy.utils
 
 <Widgets>
+	# start button for reading data from sensors
 	Button:
 		text: "start"
 		id: b11
@@ -8,6 +9,7 @@
 		pos: 200,500
 		on_press: root.start_reading()
 
+	# stop button for reading data from sensors
 	Button:
 		text: "stop"
 		id: b12
@@ -15,6 +17,7 @@
 		pos: 400,500
 		on_press: root.stop_reading()
 
+	# Graph object to display the data of first sensor
 	Graph:
 		id: g1
 		size: 300, 300
@@ -39,6 +42,7 @@
 		#tick_color: utils.get_color_from_hex('808080')
 		#border_color: utils.get_color_from_hex('808080')
 
+	# Graph object to display the data of second sensor
 	Graph:
 		id: g2
 		size: 300, 300
@@ -58,6 +62,7 @@
 		ymin:-1
 		ymax:1
 
+	# start button for sending data to server
 	Button:
 		text: "start"
 		id: b21
@@ -65,6 +70,7 @@
 		pos: 200,0
 		on_press: root.start_sending()
 
+	# stop button for sending data to server
 	Button:
 		text: "stop"
 		id: b22
