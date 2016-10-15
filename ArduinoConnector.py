@@ -1,3 +1,8 @@
+"""This code
+ 1)Initialize a serial communication (COM port)
+ 2)Receive the data from it
+ 3) write it to a dict
+ 4)Parse it to Json"""
 import serial
 import time
 import serial.tools.list_po
