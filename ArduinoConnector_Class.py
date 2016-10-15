@@ -18,16 +18,14 @@ class Connection(object):
     def get_data(self):
         while 1:
             try:
-                print(self.ser.readline())
-                time.sleep(1)
-                """val = self.ser.readline()
+                val = self.ser.readline()
                 list1 = list()  # making a BPR list
                 list2 = list()  # making a Skin conductance
                 val = str.split()  # spliting the recieved line of data to BPR and Skin conductance
                 list1.append(val[0])  # adding data to BPR list
                 list2.append(val[1])  # adding data to skin conductance list
                 data_dict = {"BPR": list1, "Skin conductance": list2}  # making a dict
-                data_Json = json.dumps(data_dict)  # parse into json"""
+                data_Json = json.dumps(data_dict)  # parse into json
             except self.ser.SerialTimeoutException:
                 print('Data could not be read')
                 time.sleep(1)
