@@ -20,5 +20,5 @@ Testing recommit to the same branch
 ---------.......................
 Testing: Doxygen
 
-<p> For doxygen document, <a href="http://sidnazir.github.io/PySiento/">Click here</a>......</p>
+<p> For doxygen documentation of the PySiento Project, <a href="http://sidnazir.github.io/PySiento/">Click here</a>......</p>
 
