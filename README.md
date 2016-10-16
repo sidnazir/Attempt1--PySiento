@@ -17,3 +17,5 @@ Testing: gitCommit
 ------------
 Sidra
 Testing recommit to the same branch
+-------------
+Doxygen output updated
