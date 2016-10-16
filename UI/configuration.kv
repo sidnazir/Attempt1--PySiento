@@ -1,0 +1,33 @@
+#:import utils kivy.utils
+
+<ConfigurationWidgets>:
+    # Hint text for selecting a port
+    Label:
+        id: portHintLabel
+        text: "Select a port to connect to"
+        size: 350, 50
+        pos: 250, 400
+
+    # Button to connect to the Arduino
+    Button:
+        id: connectButton
+        text: "Connect"
+        size: 100,50
+        pos: 500,350
+        on_press: root.connect_to_arduino()
+
+    # Button to flash the Arduino
+    Button:
+        id: flashButton
+        text: "Flash"
+        size: 100,50
+        pos: 500,250
+        on_press: root.flash_arduino()
+
+    # Button to start reading data
+    Button:
+        id: startButton
+        text: "Start"
+        size: 100,50
+        pos: 350,150
+        on_press: root.show_data()
