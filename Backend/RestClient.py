@@ -15,7 +15,8 @@ class RestClient:
         """Post method"""
         try:
             response = requests.post(self.url, data=post_data)
-            print("Server Output Received :") """Communication established with Server"""
+            """Communication established with Server"""
+            print("Server Output Received :")
             print(response)
             print("\n\n")
         except requests.exceptions.Timeout:
