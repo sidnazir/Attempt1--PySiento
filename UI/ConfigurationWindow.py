@@ -17,13 +17,6 @@ class ConfigurationWidgets(Widget):
     flash_file = None
     connected = False
 
-    no_port_selected_popup = None
-    no_file_selected_popup = None
-    no_connection_established_popup = None
-    connection_error_popup = None
-    flash_error_popup = None
-    show_data_error_popup = None
-
     def __init__(self):
         super().__init__()
 
@@ -56,20 +49,6 @@ class ConfigurationWidgets(Widget):
         # Add dropdown to the widget
         Widget.add_widget(self, widget=self.port_selection_button)
 
-        # Setup Popups
-        self.no_port_selected_popup = Popup(title='Error', content=Label(text='No port selected'),
-                                            size_hint=(None, None), size=(300, 50))
-        self.no_file_selected_popup = Popup(title='Error', content=Label(text='No file selected'),
-                                            size_hint=(None, None), size=(300, 50))
-        self.no_connection_established_popup = Popup(title='Error', content=Label(text='No connection established'),
-                                                     size_hint=(None, None), size=(300, 50))
-        self.connection_error_popup = Popup(title='Error', content=Label(text='Error connecting to device'),
-                                            size_hint=(None, None), size=(300, 50))
-        self.flash_error_popup = Popup(title='Error', content=Label(text='Error flashing device'),
-                                       size_hint=(None, None), size=(300, 50))
-        self.show_data_error_popup = Popup(title='Error', content=Label(text='Error showing data'),
-                                           size_hint=(None, None), size=(300, 50))
-
     def port_selected(self, text):
         if text == "None":
             self.selected_port = None
@@ -82,8 +61,12 @@ class ConfigurationWidgets(Widget):
         setattr(self.port_selection_button, 'text', text)
 
     def connect_to_arduino(self):
+        no_port_selected_popup = Popup(title='Error', content=Label(text='No port selected'),
+                                       size_hint=(None, None), size=(300, 150))
+        connection_error_popup = Popup(title='Error', content=Label(text='Error connecting to device'),
+                                       size_hint=(None, None), size=(300, 150))
         if self.selected_port is None:
-            self.no_port_selected_popup.open()
+            no_port_selected_popup.open()
         else:
             try:
                 # Connect to the Arduino using the Arduino Connector
@@ -91,28 +74,36 @@ class ConfigurationWidgets(Widget):
                 # If connection succeeds, set 'self.connected = True'
                 pass
             except:
-                self.connection_error_popup.open()
+                connection_error_popup.open()
 
     def flash_arduino(self):
+        no_file_selected_popup = Popup(title='Error', content=Label(text='No file selected'),
+                                       size_hint=(None, None), size=(300, 150))
+        flash_error_popup = Popup(title='Error', content=Label(text='Error flashing device'),
+                                  size_hint=(None, None), size=(300, 150))
         if self.flash_file is None:
-            self.no_file_selected_popup.open()
+            no_file_selected_popup.open()
         else:
             try:
                 # Try flashing the Arduino using the Arduino Uploader
                 # Pass the file to the Arduino Uploader
                 pass
             except:
-                self.flash_error_popup.open()
+                flash_error_popup.open()
 
     def show_data(self):
+        no_connection_established_popup = Popup(title='Error', content=Label(text='No connection established'),
+                                                size_hint=(None, None), size=(300, 150))
+        show_data_error_popup = Popup(title='Error', content=Label(text='Error showing data'),
+                                      size_hint=(None, None), size=(300, 150))
         if not self.connected:
-            self.no_connection_established_popup.open()
+            no_connection_established_popup.open()
         else:
             try:
                 # Try going to the next screen and showing data
                 pass
             except:
-                self.show_data_error_popup.open()
+                show_data_error_popup.open()
 
 
 class ConfigurationApp(App):
