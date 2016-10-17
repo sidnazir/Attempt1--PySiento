@@ -6,7 +6,15 @@ from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+from kivy.uix.floatlayout import FloatLayout
+from kivy.properties import ObjectProperty
 import serial.tools.list_ports as ports
+import os
+
+
+class LoadDialog(FloatLayout):
+    load = ObjectProperty(None)
+    cancel = ObjectProperty(None)
 
 
 class ConfigurationWidgets(Widget):
@@ -16,6 +24,8 @@ class ConfigurationWidgets(Widget):
     port_selection_button = None
     flash_file = None
     connected = False
+    load_file_button = None
+    load_popup = None
 
     def __init__(self):
         super().__init__()
@@ -49,6 +59,14 @@ class ConfigurationWidgets(Widget):
         # Add dropdown to the widget
         Widget.add_widget(self, widget=self.port_selection_button)
 
+        # Create the button for loading file to flash from
+        self.load_file_button = Button(text="<Select File>", size_hint=(None,None), size=(400, 50),
+                                       pos_hint=(None, None), pos=(50, 250))
+        self.load_file_button.bind(on_release=lambda btn: self.show_load_dialog())
+
+        # Add load file button to the widget
+        Widget.add_widget(self, widget=self.load_file_button)
+
     def port_selected(self, text):
         if text == "None":
             self.selected_port = None
@@ -59,6 +77,25 @@ class ConfigurationWidgets(Widget):
 
     def set_port_button_text(self, text):
         setattr(self.port_selection_button, 'text', text)
+
+    def show_load_dialog(self):
+        content = LoadDialog(load=self.load_file, cancel=self.cancel_load)
+        self.load_popup = Popup(title="Load flash file", content=content,
+                                size_hint=(0.9, 0.9), auto_dismiss=False)
+        self.load_popup.open()
+        pass
+
+    def load_file(self, path, filename):
+        self.flash_file = os.path.join(path, filename[0])
+        display_text = filename[0]
+        length = len(display_text)
+        if length > 20:
+            display_text = "..."+display_text[length-20:length-1]
+        setattr(self.load_file_button, 'text', display_text)
+        self.load_popup.dismiss()
+
+    def cancel_load(self):
+        self.load_popup.dismiss()
 
     def connect_to_arduino(self):
         no_port_selected_popup = Popup(title='Error', content=Label(text='No port selected'),
@@ -81,12 +118,16 @@ class ConfigurationWidgets(Widget):
                                        size_hint=(None, None), size=(300, 150))
         flash_error_popup = Popup(title='Error', content=Label(text='Error flashing device'),
                                   size_hint=(None, None), size=(300, 150))
+        no_connection_established_popup = Popup(title='Error', content=Label(text='No connection established'),
+                                                size_hint=(None, None), size=(300, 150))
         if self.flash_file is None:
             no_file_selected_popup.open()
+        elif not self.connected:
+            no_connection_established_popup.open()
         else:
             try:
                 # Try flashing the Arduino using the Arduino Uploader
-                # Pass the file to the Arduino Uploader
+                # Pass the file path to the Arduino Uploader
                 pass
             except:
                 flash_error_popup.open()
